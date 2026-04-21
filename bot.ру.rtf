@@ -1,0 +1,48 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2868
+\cocoatextscaling1\cocoaplatform1{\fonttbl\f0\fnil\fcharset0 .SFUI-Regular;\f1\fnil\fcharset0 Menlo-Regular;}
+\f0 \cf0 from aiogram import Bot, Dispatcher\
+from aiogram.types import Message\
+import asyncio\
+\
+TOKEN = "
+\f1\fs26 AAHua6VG-ZAucJXECut26V0XL3W7rckCmds
+\f0 "\
+ADMIN_ID = 8545870106\
+\
+bot = Bot(token=TOKEN)\
+dp = Dispatcher()\
+\
+@dp.message(commands=["start"])\
+async def start(message: Message):\
+    await message.answer("\uc0\u1055 \u1088 \u1080 \u1074 \u1077 \u1090 , \u1095 \u1090 \u1086 \u1073 \u1099  \u1087 \u1086 \u1076 \u1072 \u1090 \u1100  \u1072 \u1087 \u1077 \u1083 \u1083 \u1103 \u1094 \u1080 \u1102  \u1085 \u1072 \u1087 \u1080 \u1096 \u1080  \u1082 \u1086 \u1084 \u1072 \u1085 \u1076 \u1091  /help")\
+\
+@dp.message(commands=["help"])\
+async def help_cmd(message: Message):\
+    await message.answer("\uc0\u1053 \u1072 \u1087 \u1080 \u1096 \u1080  \u1089 \u1074 \u1086 \u1102  \u1072 \u1087 \u1077 \u1083 \u1083 \u1103 \u1094 \u1080 \u1102  \u1086 \u1076 \u1085 \u1080 \u1084  \u1089 \u1086 \u1086 \u1073 \u1097 \u1077 \u1085 \u1080 \u1077 \u1084 ")\
+\
+@dp.message()\
+async def handle_message(message: Message):\
+    if message.from_user.id != ADMIN_ID:\
+        text = message.text or "\uc0\u1085 \u1077  \u1090 \u1077 \u1082 \u1089 \u1090 \u1086 \u1074 \u1086 \u1077  \u1089 \u1086 \u1086 \u1073 \u1097 \u1077 \u1085 \u1080 \u1077 "\
+\
+        await bot.send_message(\
+            ADMIN_ID,\
+            f"\uc0\u55357 \u56553  \u1053 \u1086 \u1074 \u1072 \u1103  \u1072 \u1087 \u1077 \u1083 \u1083 \u1103 \u1094 \u1080 \u1103 \\n\\n"\
+            f"ID: \{message.from_user.id\}\\n"\
+            f"User: @\{message.from_user.username\}\\n"\
+            f"\uc0\u1058 \u1077 \u1082 \u1089 \u1090 : \{text\}"\
+        )\
+\
+        await message.answer("\uc0\u1054 \u1090 \u1087 \u1088 \u1072 \u1074 \u1083 \u1077 \u1085 \u1086 ! \u1054 \u1078 \u1080 \u1076 \u1072 \u1081 \u1090 \u1077 .")\
+    \
+    else:\
+        if message.reply_to_message:\
+            text = message.reply_to_message.text\
+            if "ID:" in text:\
+                user_id = int(text.split("ID:")[1].split("\\n")[0])\
+                await bot.send_message(user_id, message.text)\
+\
+async def main():\
+    await dp.start_polling(bot)\
+\
+asyncio.run(main())}
